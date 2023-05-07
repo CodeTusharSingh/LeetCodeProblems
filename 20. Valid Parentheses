@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isValid(String s) {
+                Stack<Character> stack = new Stack<>();
+        Map<Character, Character> bracketPairs = new HashMap<>();
+        bracketPairs.put(')', '(');
+        bracketPairs.put('}', '{');
+        bracketPairs.put(']', '[');
+        for (char c : s.toCharArray()) {
+            if (bracketPairs.containsValue(c)) {
+                stack.push(c);
+            } else if (bracketPairs.containsKey(c)) {
+                if (stack.isEmpty() || stack.pop() != bracketPairs.get(c)) {
+                    return false;
+                }
+            } else {
+                // Invalid character
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+}
