@@ -1,0 +1,20 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                arr.add(matrix[i][j]);
+            }
+        }
+        int min = matrix.length;
+        int incr = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            min = matrix.length;
+            for (int j = 0; j < matrix.length; j++) {
+                matrix[i][j] = arr.get((arr.size() - min) + incr);
+                min += matrix.length;
+            }
+            incr++;
+        }
+    }
+}
