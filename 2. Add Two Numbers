@@ -1,0 +1,28 @@
+import java.math.BigInteger;
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        BigInteger sum;
+        String str1 = "";
+        String str2 = "";
+        while (l1 != null) {
+            str1 += l1.val;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            str2 += l2.val;
+            l2 = l2.next;
+        }
+        String rStr1 = new StringBuilder(str1).reverse().toString();
+        String rStr2 = new StringBuilder(str2).reverse().toString();
+        sum = new BigInteger(rStr1).add(new BigInteger(rStr2));
+        ListNode head = null;
+        String numberString = sum.toString();
+        for (int i = 0; i < numberString.length(); i++) {
+            int digit = Character.getNumericValue(numberString.charAt(i));
+            ListNode newNode = new ListNode(digit);
+            newNode.next = head;
+            head = newNode;
+        }
+        return head;
+    }
+}
