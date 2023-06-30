@@ -1,0 +1,66 @@
+class Solution {
+    public String convert(String s, int numRows) {
+    String str = "";
+        int i = 0;
+        if (numRows == 1) {
+            System.out.println(s);
+            return s;
+        }
+        if (numRows == s.length()) {
+            return s;
+        }
+        int c = numRows + (numRows - 2);
+        int x = 2;
+        if (s.length() < numRows) {
+            while (i < s.length()) {
+                int j = i;
+                if (j == 0 || j == s.length() - 1) {
+                    while (j < s.length()) {
+                        str += s.charAt(j);
+                        j = j + c;
+                    }
+                } else {
+                    int y = 0;
+                    while (j < s.length()) {
+                        if (y % 2 == 0) {
+                            str += s.charAt(j);
+                            j = j + c - x;
+                        } else {
+                            str += s.charAt(j);
+                            j = j + x;
+                        }
+                        y++;
+                    }
+                    x += 2;
+                }
+                i++;
+            }
+        } else {
+            while (i < numRows) {
+                int j = i;
+                if (j == 0 || j == numRows - 1) {
+                    while (j < s.length()) {
+                        str += s.charAt(j);
+                        j = j + c;
+                    }
+                } else {
+                    int y = 0;
+                    while (j < s.length()) {
+                        if (y % 2 == 0) {
+                            str += s.charAt(j);
+                            j = j + c - x;
+                        } else {
+                            str += s.charAt(j);
+                            j = j + x;
+                        }
+                        y++;
+                    }
+                    x += 2;
+                }
+                i++;
+            }
+        }
+        System.out.println(str);
+        return str;
+    }
+}
