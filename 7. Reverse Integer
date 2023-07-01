@@ -1,0 +1,22 @@
+class Solution {
+    public int reverse(int x) {
+        String str = "";
+        int n = x;
+        if (x < 0) {
+            str += "-";
+            n = n * -1;
+        }
+        int r;
+        while (n > 0) {
+            r = n % 10;
+            str += r;
+            n = n / 10;
+        }
+        try {
+            int a = Integer.parseInt(str);
+            return a;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+}
