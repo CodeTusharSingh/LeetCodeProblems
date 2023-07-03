@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        String str = "";
+        long n = x;
+        if(x == 0){
+            return true;
+        }
+        if (x < 0) {
+            return false;
+        }
+        long r;
+        while (n > 0) {
+            r = n % 10;
+            str += r;
+            n = n / 10;
+        }
+        long a = Long.parseLong(str);
+        if(a == x) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
