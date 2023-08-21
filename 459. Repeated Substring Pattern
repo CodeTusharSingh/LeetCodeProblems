@@ -1,1 +1,58 @@
-
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        if(s.length() == 1){
+            return false;
+        } else {
+            int c = 0;
+            for (int i = 1; i <= s.length(); i++) {
+                if (s.length() % i == 0) {
+                    c++;
+                }
+            }
+            if (c == 2) {
+                int g = 0;
+                for (int i = 0; i < s.length(); i++) {
+                    if ((s.charAt(0) == s.charAt(i))) {
+                        g++;
+                    }
+                }
+                return g == s.length();
+            } else {
+                int g = 0;
+                for (int i = 0; i < s.length(); i++) {
+                    if ((s.charAt(0) == s.charAt(i))) {
+                        g++;
+                    }
+                }
+                if(g == s.length()){
+                    return true;
+                } else {
+                    int x = 0;
+                    for (int i = 2; i < s.length(); i++) {
+                        if (s.length() % i == 0) {
+                            if (s.substring(0, i).equals(s.substring(i, i + i))) {
+                                x = i;
+                            }
+                        }
+                    }
+                         if(x != 0) {
+                        int d = 0;
+                        for (int i = 0; i < s.length(); i = i + x) {
+                            if (s.substring(i, x + i).equals(s.substring(x + i, x + x + i))) {
+                                d = 1;
+                            } else {
+                                d = 0;
+                            }
+                            if (x + x + i == s.length()) {
+                                break;
+                            }
+                        }
+                    return d!=0;
+                    } else{
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+}
