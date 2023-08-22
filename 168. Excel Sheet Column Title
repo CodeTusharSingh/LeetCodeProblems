@@ -1,1 +1,72 @@
+class Solution {
+    public String convertToTitle(int columnNumber) {
+    int quotient = (columnNumber / 26);
+          int remainder = (columnNumber % 26);
+          String str = "";
+          System.out.println(quotient);
+          if(columnNumber <= 26){
+              char ch1 ;
+              if(remainder == 0){
+                  ch1 = 'Z';
+              } else{
+                  ch1 = (char) (remainder + 64);
+              }
+              str += ch1;
+          }else {
+              char ch;
+              while(quotient != 0) {
+                  if (quotient <= 26) {
+                      if(remainder == 0){
+                          quotient--;
+                          ch = (char) (quotient + 64);
+                          str += ch;
+                      } else {
+                          ch = (char) (quotient + 64);
+                          str += ch;
+                      }
+                  } else if (quotient > 26) {
+                      if(remainder == 0){
+                          quotient--;
+                          if(quotient > 26){
 
+                          } else {
+                              ch = (char) (quotient + 64);
+                              str += ch;
+                          }
+                      }
+                  }
+                  if (remainder == 0) {
+                      str += 'Z';
+                      if(quotient <= 26){
+                          break;
+                      }
+                  } else {
+                      ch = (char) (remainder + 64);
+                      str += ch;
+                      if(quotient <= 26){
+                          break;
+                      }
+                  }
+                  remainder = quotient % 26;
+                  quotient = quotient / 26;
+              }
+          }
+          if(str.length() >= 3){
+              StringBuilder sb=new StringBuilder(str);
+              sb.reverse();
+              String a = sb.toString();
+              String ans = "";
+              ans += a.charAt(1);
+              for(int i = 0; i < a.length(); i++){
+                  if(i != 1){
+                    ans += a.charAt(i);
+                  }
+              }
+              System.out.println(ans);
+              return  ans;
+          } else{
+          System.out.println(str);
+          return str;
+          }
+    }
+}
