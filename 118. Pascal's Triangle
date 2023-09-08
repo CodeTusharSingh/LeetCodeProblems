@@ -1,0 +1,35 @@
+import java.math.BigInteger;
+class Solution {
+        public List<List<Integer>> generate(int numRows) {
+        List<Integer> result = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int k = 1; k <= numRows; k++) {
+                for (int i = 0; i < k; i++) {
+                    if (i == 0) {
+                        result.add(1);
+                    } else if (i == k - 1) {
+                        result.add(1);
+                    } else {
+                        BigInteger res = factorial(k - 1).divide((factorial(k - 1 - i).multiply(factorial(i))));
+                        int res1 = res.intValueExact();
+                        result.add(res1);
+                    }
+                }
+            ans.add(result);
+            result = new ArrayList<>();
+        }
+        for (List<Integer> x :
+                ans) {
+            System.out.println(x);
+        }
+        return ans;
+    }
+
+    public BigInteger factorial(int x) {
+        BigInteger sum = BigInteger.ONE;
+        for(int i = 1; i <= x;i++){
+            sum = sum.multiply(BigInteger.valueOf(i));
+        }
+        return sum;
+    }
+}
