@@ -1,0 +1,44 @@
+class Solution {
+    public int minDeletions(String s) {
+        char[] arr =  s.toCharArray();
+        Arrays.sort(arr);
+        ArrayList<Integer> freq = new ArrayList<>();
+        int count = 0;
+        for(int i = 0; i < arr.length; i++){
+            if(i != arr.length - 1 && arr[i] == arr[i+1] ){
+                count++;
+            } else {
+                freq.add(count + 1);
+                count = 0;
+            }
+        }
+        int totalReduction = makeUnique(freq);
+
+        System.out.println(freq);
+        System.out.println(totalReduction);
+        return totalReduction;
+    }
+
+    public static int makeUnique(ArrayList<Integer> list) {
+   int totalReduction = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            int currentValue = list.get(i);
+
+            
+            for (int j = 0; j < i; j++) {
+                if (list.get(j) == currentValue) {
+                    
+                    while (list.contains(currentValue) && currentValue > 0) {
+                        currentValue--;
+                        totalReduction++;
+                    }
+                    list.set(i, currentValue);
+                    break;
+                }
+            }
+        }
+
+        return totalReduction;
+    }
+}
