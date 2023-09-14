@@ -1,4 +1,5 @@
 import java.math.BigInteger;
+
 class Solution {
         public List<List<Integer>> generate(int numRows) {
         List<Integer> result = new ArrayList<>();
