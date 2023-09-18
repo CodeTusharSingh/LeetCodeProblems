@@ -1,0 +1,41 @@
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+               int[] ans = new int[k];
+        int[] soldiers = new int[mat.length];
+        int[] pos = new int[mat.length];
+        int count = 0;
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[i].length; j++) {
+                if(mat[i][j] == 1){
+                    count++;
+                }
+            }
+            pos[i] = i;
+            soldiers[i] = count;
+            count = 0;
+        }
+        for(int i = 0; i < pos.length; i++){
+            for(int j = i + 1; j < pos.length; j++){
+              if(soldiers[i] > soldiers[j]){
+                  int temp = pos[j];
+                  pos[j] = pos[i];
+                  pos[i] = temp;
+                  int temp1 = soldiers[i];
+                  soldiers[i] = soldiers[j];
+                  soldiers[j] = temp1;
+              }
+            }
+        }
+       for(int i = 0; i < pos.length; i++){
+            for(int j = i + 1; j < pos.length; j++){
+                if(pos[i] > pos[j] && soldiers[i] == soldiers[j]){
+                    int temp = pos[j];
+                    pos[j] = pos[i];
+                    pos[i] = temp;
+                }
+            }
+        }
+        System.arraycopy(pos, 0, ans, 0, k);
+        return ans; 
+    }
+}
