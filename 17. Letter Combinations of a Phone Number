@@ -1,0 +1,291 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+        if(digits.isEmpty() || (digits.length() == 1 && digits.charAt(0) == 1)){
+            return ans;
+        }
+        String s = "";
+        for(int i = 0; i < digits.length(); i++){
+            if(digits.charAt(i) == '2'){
+                s += "abc ";
+            } else if (digits.charAt(i) == '3') {
+                s+= "def ";
+            } else if (digits.charAt(i) == '4') {
+                s+= "ghi ";
+            } else if (digits.charAt(i) == '5') {
+                s+= "jkl ";
+            } else if (digits.charAt(i) == '6') {
+                s+= "mno ";
+            } else if (digits.charAt(i) == '7') {
+                s+= "pqrs ";
+            } else if (digits.charAt(i) == '8') {
+                s+= "tuv ";
+            } else if (digits.charAt(i) == '9') {
+                s+= "wxyz ";
+            }
+        }
+        System.out.println(s);
+        if(digits.length() == 1){
+            for(int i = 0; i < s.length()-1; i++){
+                ans.add(String.valueOf(s.charAt(i)));
+            }
+        }
+        String str = "";
+        int incr = 0;
+        for(int i = 0; i < s.length() - 1; i++){
+            if(s.charAt(i) == 'p'|| s.charAt(i) == 'q' || s.charAt(i) == 'r' || s.charAt(i) == 's' || s.charAt(i) == 'w' || s.charAt(i) == 'x'|| s.charAt(i) == 'y'|| s.charAt(i) == 'z' ) {
+                if(i == 0 || s.charAt(i) == ' ') {
+                    incr = incr + 5;
+                }
+                if(s.charAt(i) != ' '){
+                    str = String.valueOf(s.charAt(i));
+                    if(digits.length() == 2) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                ans.add(str);
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    } else if (digits.length() == 3) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                if (s.charAt(j) == 'p' || s.charAt(j) == 'q' || s.charAt(j) == 'r' || s.charAt(j) == 's' || s.charAt(j) == 'w' || s.charAt(j) == 'x' || s.charAt(j) == 'y' || s.charAt(j) == 'z') {
+                                    if (j < 9) {
+                                        for (int k = 10; k < s.length() - 1; k++) {
+                                            if (s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                ans.add(str);
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (j < 8) {
+                                        for (int k = 9; k < s.length() - 1; k++) {
+                                            if (s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                ans.add(str);
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                }
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    } else if (digits.length() == 4) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                if(s.charAt(j) == 'p'|| s.charAt(j) == 'q' || s.charAt(j) == 'r' || s.charAt(j) == 's' || s.charAt(j) == 'w' || s.charAt(j) == 'x'|| s.charAt(j) == 'y'|| s.charAt(j) == 'z' ) {
+                                    if (j < 9) {
+                                        for (int k = 10; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                if(s.charAt(k) == 'p'|| s.charAt(k) == 'q' || s.charAt(k) == 'r' || s.charAt(k) == 's' || s.charAt(k) == 'w' || s.charAt(k) == 'x'|| s.charAt(k) == 'y'|| s.charAt(k) == 'z' ) {
+                                                    if(k < 14){
+                                                        for(int g = 15; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }else {
+                                                    if(k < 13){
+                                                        for(int g = 14; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                } else{
+                                    if (j < 8) {
+                                        for (int k = 9; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                if(s.charAt(k) == 'p'|| s.charAt(k) == 'q' || s.charAt(k) == 'r' || s.charAt(k) == 's' || s.charAt(k) == 'w' || s.charAt(k) == 'x'|| s.charAt(k) == 'y'|| s.charAt(k) == 'z' ) {
+                                                    if(k < 13){
+                                                        for(int g = 14; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }else {
+                                                    if(k < 12){
+                                                        for(int g = 13; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                }
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    }
+                }
+            }
+
+            else {
+                if(i == 0 || s.charAt(i) == ' ') {
+                    incr = incr + 4;
+                }
+                if(s.charAt(i) != ' '){
+                    str = String.valueOf(s.charAt(i));
+                    if(digits.length() == 2) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                ans.add(str);
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    } else if (digits.length() == 3) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                if(s.charAt(j) != 'p'|| s.charAt(j) != 'q' || s.charAt(j) != 'r' || s.charAt(j) != 's' || s.charAt(j) != 'w' || s.charAt(j) != 'x'|| s.charAt(j) != 'y'|| s.charAt(j) != 'z' ) {
+                                    if (j < 7) {
+                                        for (int k = 8; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                ans.add(str);
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                } else{
+                                    if (j < 8) {
+                                        for (int k = 9; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                ans.add(str);
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                }
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    } else if (digits.length() == 4) {
+                        for (int j = incr; j < s.length() - 1; j++) {
+                            if (s.charAt(j) != ' ') {
+                                str += s.charAt(j);
+                                if(s.charAt(j) != 'p'|| s.charAt(j) != 'q' || s.charAt(j) != 'r' || s.charAt(j) != 's' || s.charAt(j) != 'w' || s.charAt(j) != 'x'|| s.charAt(j) != 'y'|| s.charAt(j) != 'z' ) {
+                                    if (j < 7) {
+                                        for (int k = 8; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                if(s.charAt(k) == 'p'|| s.charAt(k) == 'q' || s.charAt(k) == 'r' || s.charAt(k) == 's' || s.charAt(k) == 'w' || s.charAt(k) == 'x'|| s.charAt(k) == 'y'|| s.charAt(k) == 'z' ) {
+                                                    if(k < 12){
+                                                        for(int g = 13; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }else {
+                                                    if(k < 11){
+                                                        
+                                                        for(int g = 12; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                } else{
+                                    if (j < 8) {
+                                        for (int k = 9; k < s.length() - 1; k++) {
+                                            if(s.charAt(k) != ' ') {
+                                                str += s.charAt(k);
+                                                if(s.charAt(k) == 'p'|| s.charAt(k) == 'q' || s.charAt(k) == 'r' || s.charAt(k) == 's' || s.charAt(k) == 'w' || s.charAt(k) == 'x'|| s.charAt(k) == 'y'|| s.charAt(k) == 'z' ) {
+                                                    if(k < 12){
+                                                        for(int g = 13; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }else {
+                                                    if(k < 11){
+                                                        for(int g = 12; g < s.length() - 1; g++){
+                                                            if(s.charAt(g) != ' ') {
+                                                                str += s.charAt(g);
+                                                                ans.add(str);
+                                                                str = String.valueOf(s.charAt(i));
+                                                                str += s.charAt(j);
+                                                                str += s.charAt(k);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                str = String.valueOf(s.charAt(i));
+                                                str += s.charAt(j);
+                                            }
+                                        }
+                                    }
+                                }
+                                str = String.valueOf(s.charAt(i));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
