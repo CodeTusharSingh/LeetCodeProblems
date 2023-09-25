@@ -1,0 +1,24 @@
+class Solution {
+    public char findTheDifference(String s, String t) {
+        char[] arrs = s.toCharArray();
+        char[] arrt = t.toCharArray();
+        Arrays.sort(arrs);
+        Arrays.sort(arrt);
+        for(int i = 0; i < s.length(); i++){
+            if(arrs[i] == arrt[i]) {
+                arrt[i] = '#';
+            }
+        }
+        if(arrt.length == 1){
+            return arrt[0];
+        }
+        char x = ' ';
+        for(int i = 0; i < arrt.length; i++){
+            if(arrt[i] != '#'){
+                x = arrt[i];
+                break;
+            }
+        }
+        return x;
+    }
+}
