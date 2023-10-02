@@ -1,0 +1,29 @@
+class Solution {
+   public boolean winnerOfGame(String colors) {
+        if (colors.length() == 1) {
+            return false;
+        }
+        int alice = 0;
+        int bob = 0;
+        String[] A = colors.split("B");
+        String[] B = colors.split("A");
+        for (int i = 0; i < A.length; i++) {
+            if (A[i].length() >= 3) {
+                alice += (A[i].length() - 2);
+            }
+        }
+        for (int i = 0; i < B.length; i++) {
+            if (B[i].length() >= 3) {
+                bob += (B[i].length() - 2);
+            }
+        }
+        if (alice > bob) {
+            return true;
+        } else if (bob > alice) {
+            return false;
+        } else {
+                return false;
+        }
+    }
+
+}
