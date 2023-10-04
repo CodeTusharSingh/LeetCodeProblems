@@ -1,0 +1,53 @@
+class MyHashMap {
+
+    public ArrayList<ArrayList<Integer>> hashList;
+    public ArrayList<Integer> putList;
+
+    public MyHashMap() {
+        hashList = new ArrayList<>();
+        putList = new ArrayList<>();
+    }
+
+    public void put(int key, int value) {
+        if (hashList.isEmpty()) {
+            putList.add(key);
+            putList.add(value);
+            hashList.add(new ArrayList<>(putList));
+            putList.clear();
+        } else {
+            int chk = 0;
+            for (int i = 0; i < hashList.size(); i++) {
+                if (hashList.get(i).get(0) == key) {
+                    hashList.get(i).add(1, value);
+                    chk = 1;
+                    break;
+                }
+            }
+            if (chk == 0) {
+                putList.add(key);
+                putList.add(value);
+                hashList.add(new ArrayList<>(putList));
+                putList.clear();
+            }
+        }
+    }
+
+    public int get(int key) {
+        int x = -1;
+        for (int i = 0; i < hashList.size(); i++) {
+            if (hashList.get(i).get(0) == key) {
+                x = hashList.get(i).get(1);
+            }
+        }
+        return x;
+    }
+
+    public void remove(int key) {
+        for (int i = 0; i < hashList.size(); i++) {
+            if (hashList.get(i).get(0) == key) {
+                hashList.remove(i);
+                break;
+            }
+        }
+    }
+}
