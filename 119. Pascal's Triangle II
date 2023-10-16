@@ -1,0 +1,32 @@
+import java.math.BigInteger;
+
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> output = new ArrayList<>();
+        if (rowIndex == 0) {
+            output.add(0, 1);
+            return output;
+        } else {
+            output.add(1);
+            if (rowIndex == 1) {
+                output.add(rowIndex, 1);
+                return output;
+            }
+            for (int i = 1; i < rowIndex + 1; i++) {
+                BigInteger res = factorial(rowIndex).divide((factorial(rowIndex - i).multiply(factorial(i))));
+                int res1 = res.intValueExact();
+                output.add(res1);
+            }
+            System.out.println(output);
+            return output;
+        }
+    }
+
+    public BigInteger factorial(int x) {
+        BigInteger sum = BigInteger.ONE;
+        for (int i = 1; i <= x; i++) {
+            sum = sum.multiply(BigInteger.valueOf(i));
+        }
+        return sum;
+    }
+    }
