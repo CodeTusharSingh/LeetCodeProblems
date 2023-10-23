@@ -1,0 +1,11 @@
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        double x = Math.log(n)/Math.log(10);
+        double y = Math.log(4)/Math.log(10);
+        double result = ((x/y) - Math.floor(x / y));
+        DecimalFormat df = new DecimalFormat("#.#####");
+        String formattedResult = df.format(result);
+        double resultDouble = Double.parseDouble(formattedResult);
+        return resultDouble == 0 ? true : false;
+    }
+}
