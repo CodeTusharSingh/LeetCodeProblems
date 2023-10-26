@@ -1,0 +1,25 @@
+class Solution {
+  public int numFactoredBinaryTrees(int[] arr) {
+    final int n = arr.length;
+    long[] dp = new long[n];
+    Map<Integer, Integer> numToIndex = new HashMap<>();
+
+    Arrays.sort(arr);
+    Arrays.fill(dp, 1);
+
+    for (int i = 0; i < n; i++)
+      numToIndex.put(arr[i], i);
+
+    for (int i = 0; i < n; i++) 
+      for (int j = 0; j < i; j++)
+        if (arr[i] % arr[j] == 0) { 
+          final int right = arr[i] / arr[j];
+          if (numToIndex.containsKey(right)) {
+            dp[i] += dp[j] * dp[numToIndex.get(right)];
+            dp[i] %= 1000000007;
+          }
+        }
+
+    return (int) (Arrays.stream(dp).sum() % 1000000007);
+  }
+}
