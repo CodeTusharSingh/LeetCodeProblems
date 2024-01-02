@@ -1,0 +1,37 @@
+class Solution {
+    public List<List<Integer>> findMatrix(int[] nums) {
+        List<List<Integer>> matrix = new ArrayList<>();
+        List<Integer> mat = new ArrayList<>();
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        int max = 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (hm.containsKey(nums[i])) {
+                int x = hm.get(nums[i]);
+                hm.put(nums[i], x = x + 1);
+                if (max < x) {
+                    max = x;
+                }
+            } else {
+                hm.put(nums[i], 1);
+            }
+        }
+        System.out.println(hm);
+        for (int i = 0; i < max; i++) {
+
+            for (Map.Entry<Integer, Integer> element : hm.entrySet()) {
+                if (hm.get(element.getKey()) != 0) {
+                    mat.add(element.getKey());
+                    int x = hm.get(element.getKey());
+                    hm.put(element.getKey(), x = x - 1);
+                }
+            }
+            if (mat.size() != 0) {
+                matrix.add(mat);
+            }
+            mat = new ArrayList<>();
+
+        }
+        System.out.println(matrix);
+        return matrix;
+    }
+}
