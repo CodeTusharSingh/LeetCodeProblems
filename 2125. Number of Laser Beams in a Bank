@@ -1,0 +1,24 @@
+class Solution {
+    public int numberOfBeams(String[] bank) {
+             int product = 0;
+        int check = 0;
+        int c1 = 0;
+        int c2 = 0;
+        for (int i = 0; i < bank.length; i++) {
+            check = 0;
+            for (int j = 0; j < bank[i].length(); j++) {
+                if (bank[i].charAt(j) == '1') {
+                    check = 1;
+                    c1++;
+                }
+            }
+            if (check == 1) {
+                product += (c1 * c2);
+                c2 = c1;
+                c1 = 0;
+            }
+        }
+        System.out.println(product);
+        return product;   
+    }
+}
