@@ -1,0 +1,29 @@
+class Solution {
+  public int minimumTotal(List<List<Integer>> triangle) {
+            ArrayList<Integer> sum = new ArrayList<>();
+        for (int i = 0; i < triangle.size(); i++) {
+            if (i == 0) {
+                sum.add(triangle.get(i).get(0));
+            } else {
+                for (int j = 0; j < triangle.get(i).size() - 1; j++) {
+                    sum.add(sum.get(j) + triangle.get(i).get(j));
+                    sum.add(sum.get(j) + triangle.get(i).get(j + 1));
+                }
+                for (int k = 0; k < triangle.get(i).size() - 1; k++) {
+                    sum.remove(0);
+                }
+                int l = 1;
+                while (l < sum.size() - 1) {
+                    if (sum.get(l) < sum.get(l + 1)) {
+                        sum.remove(l + 1);
+                    } else {
+                        sum.remove(l);
+                    }
+                    l++;
+                }
+            }
+        }
+        System.out.println(sum);
+        return Collections.min(sum);
+  }
+}
