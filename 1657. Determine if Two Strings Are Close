@@ -1,0 +1,44 @@
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+        HashMap<Character, Integer> freq1 = new HashMap<>();
+        HashMap<Character, Integer> freq2 = new HashMap<>();
+       
+        for (int i = 0; i < word1.length(); i++) {
+            if (freq1.containsKey(word1.charAt(i))) {
+                int x = freq1.get(word1.charAt(i));
+                freq1.put(word1.charAt(i), x + 1);
+            } else {
+                freq1.put(word1.charAt(i), 1);
+            }
+        }
+        for (int i = 0; i < word2.length(); i++) {
+            if (freq2.containsKey(word2.charAt(i))) {
+                int x = freq2.get(word2.charAt(i));
+                freq2.put(word2.charAt(i), x + 1);
+            } else {
+                freq2.put(word2.charAt(i), 1);
+            }
+        }
+        
+        for (Map.Entry<Character, Integer> element : freq2.entrySet()) {
+            if (freq1.containsKey(element.getKey())) {
+                if (freq1.containsValue(element.getValue())) {
+                    for (Map.Entry<Character, Integer> x : freq1.entrySet()) {
+                        if (freq1.get(x.getKey()) == element.getValue()) {
+                            freq1.put(x.getKey(), -1);
+                            break;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+}
