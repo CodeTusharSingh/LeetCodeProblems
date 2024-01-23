@@ -1,0 +1,90 @@
+class Solution {
+    public int maxLength(List<String> arr) {
+        int max = 0;
+        HashSet<Character> hs = new HashSet<Character>();
+        HashSet<Character> hs1 = new HashSet<Character>();
+        Collections.sort(arr, Comparator.comparingInt(String::length));
+        for (int k = 0; k < arr.size(); k++) {
+            hs.clear();
+            for (int l = 0; l < arr.get(k).length(); l++)
+                hs.add(arr.get(k).charAt(l));
+            if (arr.get(k).length() == hs.size()) {
+                if (max < arr.get(k).length()) {
+                    max = arr.get(k).length();
+                }
+                StringBuilder x = new StringBuilder(arr.get(k));
+                StringBuilder y = new StringBuilder(arr.get(k));
+                int leng = y.length();
+                for (int j = k+1; j < arr.size(); j++) {
+                    int len = x.length();
+                    x.append(arr.get(j));
+                    for (int i = 0; i < x.length(); i++)
+                        hs.add(x.charAt(i));
+                    if (x.length() != hs.size()) {
+                        x.delete(len, x.length());
+                        hs.clear();
+                    }
+                    if (max < x.length()) {
+                        max = x.length();
+                    }
+                    y.append(arr.get(j));
+                    for (int i = 0; i < y.length(); i++)
+                        hs1.add(y.charAt(i));
+                    if (y.length() == hs1.size()) {
+                        if (max < y.length()) {
+                            max = y.length();
+                        }
+                    }
+                    hs1.clear();
+                    y.delete(leng, y.length());
+
+                }
+                x.delete(0, x.length());
+            }
+        }
+        hs.clear();
+        Collections.reverse(arr);
+        System.out.println(arr);
+        for (int k = 0; k < arr.size(); k++) {
+            hs.clear();
+            for (int l = 0; l < arr.get(k).length(); l++)
+                hs.add(arr.get(k).charAt(l));
+            if (arr.get(k).length() == hs.size()) {
+                if (max < arr.get(k).length()) {
+                    max = arr.get(k).length();
+                }
+                StringBuilder x = new StringBuilder(arr.get(k));
+                StringBuilder y = new StringBuilder(arr.get(k));
+                int leng = y.length();
+                for (int j = k+1; j < arr.size(); j++) {
+                    int len = x.length();
+                    x.append(arr.get(j));
+                    for (int i = 0; i < x.length(); i++)
+                        hs.add(x.charAt(i));
+                    if (x.length() != hs.size()) {
+                        x.delete(len, x.length());
+                        hs.clear();
+                    }
+                    if (max < x.length()) {
+                        max = x.length();
+                    }
+                    y.append(arr.get(j));
+                    for (int i = 0; i < y.length(); i++)
+                        hs1.add(y.charAt(i));
+                    if (y.length() == hs1.size()) {
+                        if (max < y.length()) {
+                            max = y.length();
+                        }
+
+                    }
+                    hs1.clear();
+                    y.delete(leng, y.length());
+
+             }
+                x.delete(0, x.length());
+            }
+        }
+
+        return max;
+    }
+}
