@@ -1,0 +1,49 @@
+class Solution {
+    public int numSubmatrixSumTarget(int[][] matrix, int target) {
+        int prefixmat[][] = new int[matrix.length][matrix[0].length];
+        int sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            sum = 0;
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (i == 0 && j == 0) {
+                    sum += matrix[i][j];
+                    prefixmat[i][j] = matrix[i][j];
+                } else if (i == 0) {
+                    prefixmat[i][j] = sum + matrix[i][j];
+                    sum += matrix[i][j];
+                } else {
+                    prefixmat[i][j] = sum + matrix[i][j] + prefixmat[i - 1][j];
+                    sum += matrix[i][j];
+                }
+            }
+        }
+        int ans = 0;
+        for (int r1 = 0; r1 < matrix.length; r1++) {
+            for (int c1 = 0; c1 < matrix[r1].length; c1++) {
+                for (int r2 = r1; r2 < matrix.length; r2++) {
+                    for (int c2 = c1; c2 < matrix[r2].length; c2++) {
+                        if (r1 == 0 && c1 == 0) {
+                            if (target == (prefixmat[r2][c2])) {
+                                ans++;
+                            }
+                        } else if (r1 == 0) {
+                            if (target == (prefixmat[r2][c2] - prefixmat[r2][c1 - 1])) {
+                                ans++;
+                            }
+                        } else if (c1 == 0) {
+                            if (target == (prefixmat[r2][c2] - prefixmat[r1 - 1][c2])) {
+                                ans++;
+                            }
+                        } else {
+                            if (target == (prefixmat[r2][c2] - prefixmat[r2][c1 - 1] - prefixmat[r1 - 1][c2]
+                                    + prefixmat[r1 - 1][c1 - 1])) {
+                                ans++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
