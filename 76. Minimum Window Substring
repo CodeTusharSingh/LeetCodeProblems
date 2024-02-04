@@ -1,0 +1,41 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        int p1 = 0;
+        int p2 = 0;
+        HashMap<Character, Integer> shm = new HashMap<>();
+        HashMap<Character, Integer> thm = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            char tChar = t.charAt(i);
+            thm.put(tChar, thm.getOrDefault(tChar, 0) + 1);
+            shm.put(tChar, 0);
+        }
+        String minWindow = "";
+        while (p2 < s.length()) {
+            char charP2 = s.charAt(p2);
+            shm.put(charP2, shm.getOrDefault(charP2, 0) + 1);
+            p2++;
+            while (containsSubmap(shm, thm)) {
+                String window = s.substring(p1, p2);
+                if (minWindow.length() == 0) {
+                    minWindow = window;
+                } else if (minWindow.length() > window.length()) {
+                    minWindow = window;
+                }
+                char charP1 = s.charAt(p1);
+                shm.put(charP1, shm.get(charP1) - 1);
+                p1++;
+            }
+        }
+        return minWindow;
+    }
+
+    private boolean containsSubmap(HashMap<Character, Integer> map1, HashMap<Character, Integer> map2) {
+        for (char key : map2.keySet()) {
+            if (map1.getOrDefault(key, 0) < map2.get(key)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+}
