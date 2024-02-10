@@ -1,0 +1,53 @@
+class Solution {
+    public int countSubstrings(String s) {
+        int l = 0;
+        int r = 0;
+        int count = 0;
+        int ind = 0;
+        while (ind < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                count++;
+                l--;
+                r++;
+                if (l < 0) {
+                    ind++;
+                    l = ind;
+                    r = ind;
+                } else if (r > s.length() - 1) {
+                    ind++;
+                    l = ind;
+                    r = ind;
+                }
+            } else {
+                ind++;
+                l = ind;
+                r = ind;
+            }
+
+        }
+        l = 0;
+        r = 1;
+        ind = 0;
+        while (ind < s.length() && l >= 0 && r < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                count++;
+                l--;
+                r++;
+                if (l < 0) {
+                    ind++;
+                    l = ind;
+                    r = ind + 1;
+                } else if (r > s.length() - 1) {
+                    ind++;
+                    l = ind;
+                    r = ind + 1;
+                }
+            } else if (s.charAt(l) != s.charAt(r)) {
+                ind++;
+                l = ind;
+                r = ind + 1;
+            }
+        }
+        return count;
+    }
+}
