@@ -1,0 +1,64 @@
+class Solution {
+    public boolean isEvenOddTree(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> levelQueue = new LinkedList<>();
+
+        queue.add(root);
+        levelQueue.add(0);
+        int prevVal = root.val;
+        int prevLevel = 0;
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            int currentLevel = levelQueue.poll();
+
+            if (currentLevel % 2 == 0) {
+                if (currentLevel == 0) {
+                    if (current.val % 2 == 0) {
+                        return false;
+                    }
+                } else {
+                    if (prevLevel == currentLevel) {
+                        if (current.val % 2 == 1) {
+                            if (current.val <= prevVal) {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        if (current.val % 2 == 0) {
+                            return false;
+                        }
+                    }
+                }
+            } else if (currentLevel % 2 != 0) {
+                if (prevLevel == currentLevel) {
+                    if (current.val % 2 == 0) {
+                        if (current.val >= prevVal) {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    if (current.val % 2 == 1) {
+                        return false;
+                    }
+                }
+            }
+
+            if (current.left != null) {
+                queue.add(current.left);
+                levelQueue.add(currentLevel + 1);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+                levelQueue.add(currentLevel + 1);
+            }
+            prevVal = current.val;
+            prevLevel = currentLevel;
+        }
+        return true;
+    }
+}
