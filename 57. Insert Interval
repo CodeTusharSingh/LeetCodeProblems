@@ -1,0 +1,39 @@
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        if (intervals.length == 0) {
+            return new int[][] { { newInterval[0], newInterval[1] } };
+        }
+        int n = intervals.length;
+        ArrayList<int[]> arr = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            arr.add(intervals[i]);
+        }
+        arr.add(newInterval);
+    
+        int[][] array = arr.toArray(int[][] :: new);
+         for (int i = 0; i < n ; i++) {
+            int min = i;
+            for (int j = i + 1; j < n+1; j++) {
+                if (array[j][0] < array[min][0]) {
+                    min = j;
+                }
+            }
+            int[] temp = array[min];
+            array[min] = array[i];
+            array[i] = temp;
+        }
+        arr = new ArrayList<>();
+        for (int i = 0; i < n + 1; i++) {
+            if (i == 0) {
+                arr.add(array[i]);
+            } else {
+                if (array[i][0] <= arr.get(arr.size() - 1)[1]) {
+                    arr.get(arr.size() - 1)[1] = Math.max(arr.get(arr.size() - 1)[1], array[i][1]);
+                } else {
+                    arr.add(array[i]);
+                }
+            }
+        }
+        return arr.toArray(int[][]::new); 
+    }
+}
