@@ -1,0 +1,27 @@
+class Solution {
+    public ListNode removeNodes(ListNode head) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        ListNode temp = head;
+        while(temp != null) {
+            arr.add(temp.val);
+            temp = temp.next;
+        }
+        int max = arr.get(arr.size() - 1);
+        for(int i = arr.size() - 2;i >= 0; i--){
+            if(max > arr.get(i)){
+                arr.set(i,-1);
+            } else {
+                max = arr.get(i);
+            }
+        }
+        ListNode x = null;
+        for(int i = arr.size() - 1; i >= 0; i--){
+            if(arr.get(i) != -1){
+                ListNode y = new ListNode(arr.get(i));
+                y.next = x;
+                x = y;
+            }
+        }
+        return x;
+    }
+}
