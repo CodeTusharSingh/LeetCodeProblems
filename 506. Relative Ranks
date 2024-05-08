@@ -1,0 +1,80 @@
+class Solution {
+    public String[] findRelativeRanks(int[] score) {
+        if (score.length == 1) {
+            return new String[] { "Gold Medal" };
+        }
+        int n = score.length;
+        String[] answer = new String[n];
+        int[] y = mergeSort(score);
+        int r = 4;
+        for (int c = n-1; c >= 0; c--) {
+            if (c == n -1) {
+                answer[y[c]] = "Gold Medal";
+            } else if (c == n - 2) {
+                answer[y[c]] = "Silver Medal";
+            } else if (c == n-3) {
+                answer[y[c]] = "Bronze Medal";
+            } else {
+                answer[y[c]] = String.valueOf(r);
+                r++;
+            }
+        }
+        return answer;
+    }
+
+    public static int[] mergeSort(int[] arr) {
+        if (arr == null || arr.length <= 1)
+            return arr;
+        
+        int[] indices = new int[arr.length];
+        for (int i = 0; i < indices.length; i++) {
+            indices[i] = i; // Initialize indices array with original indices
+        }
+        
+        int[] helper = new int[arr.length];
+        mergeSort(arr, indices, helper, 0, arr.length - 1);
+        return indices;
+    }
+    
+    private static void mergeSort(int[] arr, int[] indices, int[] helper, int low, int high) {
+        if (low < high) {
+            int middle = (low + high) / 2;
+            mergeSort(arr, indices, helper, low, middle);
+            mergeSort(arr, indices, helper, middle + 1, high);
+            merge(arr, indices, helper, low, middle, high);
+        }
+    }
+    
+    private static void merge(int[] arr, int[] indices, int[] helper, int low, int middle, int high) {
+        // Copy both parts into the helper array
+        for (int i = low; i <= high; i++) {
+            helper[i] = indices[i];
+        }
+        
+        int i = low;
+        int j = middle + 1;
+        int k = low;
+        
+        // Copy the smallest values from either the left or the right side back to the original array
+        while (i <= middle && j <= high) {
+            if (arr[helper[i]] <= arr[helper[j]]) {
+                indices[k] = helper[i];
+                i++;
+            } else {
+                indices[k] = helper[j];
+                j++;
+            }
+            k++;
+        }
+        
+        // Copy the rest of the left side of the array into the target array
+        while (i <= middle) {
+            indices[k] = helper[i];
+            k++;
+            i++;
+        }
+        
+        // Since we are sorting in-place, we don't need to copy the rest of the right side of the array
+        // because it is already in the correct position.
+    }
+}
