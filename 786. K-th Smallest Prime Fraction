@@ -1,0 +1,75 @@
+class Solution {
+    public int[] kthSmallestPrimeFraction(int[] arr, int k) {
+        int ans[] = new int[2];
+        int n = arr.length;
+        double dec[] = new double[(n*(n-1))/2];
+        String frac1[] = new String[(n*(n-1))/2];
+        String frac2[] = new String[(n*(n-1))/2];
+        int c = 0;
+        for(int i = 0; i < arr.length; i++){
+            for(int j = i+1;j < n;j++){
+                dec[c] = (double)arr[i]/arr[j];
+                frac1[c] = String.valueOf(arr[i]);
+                frac2[c] = String.valueOf(arr[j]);
+                c++;
+            }
+        }
+        int x[] = mergeSort(dec);
+        ans[0] = Integer.parseInt(frac1[x[k-1]]);
+        ans[1] = Integer.parseInt(frac2[x[k-1]]);
+        return ans;
+    }
+    public static int[] mergeSort(double[] arr) {
+        
+        int[] indices = new int[arr.length];
+        for (int i = 0; i < indices.length; i++) {
+            indices[i] = i; // Initialize indices array with original indices
+        }
+        
+        int[] helper = new int[arr.length];
+        mergeSort(arr, indices, helper, 0, arr.length - 1);
+        return indices;
+    }
+    
+    private static void mergeSort(double[] arr, int[] indices, int[] helper, int low, int high) {
+        if (low < high) {
+            int middle = (low + high) / 2;
+            mergeSort(arr, indices, helper, low, middle);
+            mergeSort(arr, indices, helper, middle + 1, high);
+            merge(arr, indices, helper, low, middle, high);
+        }
+    }
+    
+    private static void merge(double[] arr, int[] indices, int[] helper, int low, int middle, int high) {
+        // Copy both parts into the helper array
+        for (int i = low; i <= high; i++) {
+            helper[i] = indices[i];
+        }
+        
+        int i = low;
+        int j = middle + 1;
+        int k = low;
+        
+        // Copy the smallest values from either the left or the right side back to the original array
+        while (i <= middle && j <= high) {
+            if (arr[helper[i]] <= arr[helper[j]]) {
+                indices[k] = helper[i];
+                i++;
+            } else {
+                indices[k] = helper[j];
+                j++;
+            }
+            k++;
+        }
+        
+        // Copy the rest of the left side of the array into the target array
+        while (i <= middle) {
+            indices[k] = helper[i];
+            k++;
+            i++;
+        }
+        
+        // Since we are sorting in-place, we don't need to copy the rest of the right side of the array
+        // because it is already in the correct position.
+    }
+}
