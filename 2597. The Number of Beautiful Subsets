@@ -1,0 +1,90 @@
+class Solution {
+    public int beautifulSubsets(int[] nums, int k) {
+        List<List<Integer>> subsets = generateBeautifulSubsets(nums, k);
+        return subsets.size() - 1;
+    }
+
+    public static List<List<Integer>> generateBeautifulSubsets(int[] nums, int k) {
+        // Step 1: Sort the array
+        Arrays.sort(nums);
+
+        // Step 2: Initialize the result list and count array
+        List<List<Integer>> result = new ArrayList<>();
+        int[] cnt = new int[nums[nums.length - 1] + 1];
+
+        // Step 3: Start the backtracking process
+        backtrack(nums, k, 0, new ArrayList<>(), cnt, result);
+
+        return result;
+    }
+
+    private static void backtrack(int[] nums, int k, int index, List<Integer> current, int[] cnt,
+            List<List<Integer>> result) {
+        // Add the current subset to the result
+        result.add(new ArrayList<>(current));
+
+        // Iterate through the array starting from the current index
+        for (int i = index; i < nums.length; i++) {
+            int num = nums[i];
+
+            // If cnt[num - k] is positive, skip this element
+            if (num >= k && cnt[num - k] > 0) {
+                continue;
+            }
+
+            // Include nums[i] in the subset
+            current.add(num);
+            cnt[num]++;
+
+            // Move to the next index with the updated subset
+            backtrack(nums, k, i + 1, current, cnt, result);
+
+            // Backtrack: remove nums[i] from the subset and decrement the count
+            current.remove(current.size() - 1);
+            cnt[num]--;
+        }
+    }
+
+//-------------------------------------------------------------------------------------------
+    // public int beautifulSubsets(int[] nums, int k) {
+    // Arrays.sort(nums);
+    // List<List<Integer>> result = new ArrayList<>();
+    // backtrack(nums, k, 0, new ArrayList<>(), result);
+    // return result.size();
+    // }
+
+    // private static void backtrack(int[] nums, int k, int index, List<Integer>
+    // current,
+    // List<List<Integer>> result) {
+
+    // if (current.size() == 1) {
+    // result.add(new ArrayList<>(current));
+    // } else if (current.size() >= 2) {
+    // boolean hasPair = hasPairWithDifference(current, k);
+    // if (!hasPair) {
+    // result.add(new ArrayList<>(current));
+    // }
+    // }
+
+    // for (int i = index; i < nums.length; i++) {
+    // current.add(nums[i]);
+    // backtrack(nums, k, i + 1, current, result);
+    // current.remove(current.size() - 1);
+    // }
+    // }
+
+    // public static boolean hasPairWithDifference(List<Integer> nums, int k) {
+    // Set<Integer> numSet = new HashSet<>();
+    // for (int num : nums) {
+    // numSet.add(num);
+    // }
+
+    // for (int num : nums) {
+    // if (numSet.contains(num + k) || numSet.contains(num - k)) {
+    // return true;
+    // }
+    // }
+
+    // return false;
+    // }
+}
