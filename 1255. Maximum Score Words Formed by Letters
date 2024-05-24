@@ -1,0 +1,48 @@
+class Solution {
+    public int maxScoreWords(String[] words, char[] letters, int[] score) {
+        List<List<String>> res = new ArrayList<>();
+        backtrack(words, new ArrayList<>(), res, 0);
+        int max = 0;
+        for (int i = 0; i < res.size(); i++)
+            if (max < score(res.get(i), letters, score)) {
+                max = score(res.get(i), letters, score);
+            }
+
+        return max;
+    }
+
+    public void backtrack(String[] words, List<String> subset, List<List<String>> res, int index) {
+        if (subset.size() > 0) {
+            res.add(new ArrayList<>(subset));
+        }
+        for (int i = index; i < words.length; i++) {
+            subset.add(words[i]);
+            backtrack(words, subset, res, i + 1);
+            subset.remove(subset.size() - 1);
+        }
+    }
+
+    public int score(List<String> subset, char[] letters, int[] score) {
+        HashMap<Character, Integer> let = new HashMap<>();
+        for (int i = 0; i < letters.length; i++) {
+            let.put(letters[i], let.getOrDefault(letters[i], 0) + 1);
+        }
+        int max = 0;
+        for (int i = 0; i < subset.size(); i++) {
+            for (int j = 0; j < subset.get(i).length(); j++) {
+                if (let.containsKey(subset.get(i).charAt(j))) {
+                    if (let.get(subset.get(i).charAt(j)) > 0) {
+                        let.put(subset.get(i).charAt(j), let.get(subset.get(i).charAt(j)) - 1);
+                        
+                        max += score[(int) subset.get(i).charAt(j) - 97];
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    return 0;
+                }
+            }
+        }
+        return max;
+    }
+}
