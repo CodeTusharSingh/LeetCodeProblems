@@ -1,0 +1,62 @@
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+        sort(nums, 0, nums.length - 1, frequencyMap);
+        return nums;
+    }
+
+    public void sort(int[] h, int l, int r, HashMap<Integer, Integer> hm) {
+        if (l < r) {
+            int mid = (l + r) / 2;
+            sort(h, l, mid, hm);
+            sort(h, mid + 1, r, hm);
+            merge(h, l, mid, r, hm);
+        }
+    }
+
+    public void merge(int[] h, int l, int mid, int r, HashMap<Integer, Integer> hm) {
+        int n1 = mid - l + 1;
+        int n2 = r - mid;
+        int[] arr1 = new int[n1];
+        int[] arr2 = new int[n2];
+        for (int i = 0; i < n1; i++) {
+            arr1[i] = h[l + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            arr2[j] = h[mid + 1 + j];
+        }
+        int k = l;
+        int i = 0, j = 0;
+        while (i < n1 && j < n2) {
+            if (hm.get(arr1[i]) < hm.get(arr2[j])) {
+                h[k] = arr1[i];
+                i++;
+            } else if (hm.get(arr1[i]) > hm.get(arr2[j])) {
+                h[k] = arr2[j];
+                j++;
+            } else {
+                if (arr1[i] < arr2[j]) {
+                    h[k] = arr2[j];
+                    j++;
+                } else {
+                    h[k] = arr1[i];
+                    i++;
+                }
+            }
+            k++;
+        }
+        while (i < n1) {
+            h[k] = arr1[i];
+            i++;
+            k++;
+        }
+        while (j < n2) {
+            h[k] = arr2[j];
+            j++;
+            k++;
+        }
+    }
+}
