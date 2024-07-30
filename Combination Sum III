@@ -1,0 +1,31 @@
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res = new ArrayList<>();
+        int sum = 0;
+        boolean[] used = new boolean[9];
+        backtrack(0, used, n, k, sum, res, new ArrayList<>());
+        return res;
+    }
+
+    public void backtrack(int s, boolean[] used, int n, int k, int sum, List<List<Integer>> res,
+            List<Integer> sub) {
+        if (sum == n && sub.size() == k) {
+            res.add(new ArrayList<>(sub));
+            return;
+        } else if (sum > n) {
+            return;
+        }
+        for (int i = s; i < 9; i++) {
+            if (used[i] == true) {
+                continue;
+            }
+            used[i] = true;
+            sub.add((i + 1));
+            sum += (i + 1);
+            backtrack(i + 1, used, n, k, sum, res, sub);
+            sum -= (i + 1);
+            sub.remove(sub.size() - 1);
+            used[i] = false;
+        }
+    }
+}
