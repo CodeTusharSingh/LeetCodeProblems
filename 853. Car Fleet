@@ -1,0 +1,21 @@
+class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        Deque<int[]> stk = new ArrayDeque<>();
+        double[][] pair = new double[position.length][2];
+        for (int i = 0; i < position.length; i++) {
+            pair[i][0] = position[i];
+            pair[i][1] = (double) (target - position[i]) / speed[i];
+            
+        }
+        Arrays.sort(pair, (a,b) -> (int) b[0] - (int) a[0]);
+        double maxTime = 0;
+        int res = 0;
+        for(int i = 0; i < position.length; i++) {
+            if(maxTime < pair[i][1]){
+                maxTime = pair[i][1];
+                res++;
+            }
+        }
+        return res;
+    }
+}
