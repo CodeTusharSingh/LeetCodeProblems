@@ -1,0 +1,121 @@
+class Solution {
+    public String numberToWords(int num) {
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("0", "Zero");
+        hm.put("00", "");
+        hm.put("000", "");
+        hm.put("1", "One");
+        hm.put("2", "Two");
+        hm.put("3", "Three");
+        hm.put("4", "Four");
+        hm.put("5", "Five");
+        hm.put("6", "Six");
+        hm.put("7", "Seven");
+        hm.put("8", "Eight");
+        hm.put("9", "Nine");
+        hm.put("01", "One");
+        hm.put("02", "Two");
+        hm.put("03", "Three");
+        hm.put("04", "Four");
+        hm.put("05", "Five");
+        hm.put("06", "Six");
+        hm.put("07", "Seven");
+        hm.put("08", "Eight");
+        hm.put("09", "Nine");
+        hm.put("10", "Ten");
+        hm.put("11", "Eleven");
+        hm.put("12", "Twelve");
+        hm.put("13", "Thirteen");
+        hm.put("14", "Fourteen");
+        hm.put("15", "Fifteen");
+        hm.put("16", "Sixteen");
+        hm.put("17", "Seventeen");
+        hm.put("18", "Eighteen");
+        hm.put("19", "Nineteen");
+        hm.put("20", "Twenty");
+        hm.put("30", "Thirty");
+        hm.put("40", "Forty");
+        hm.put("50", "Fifty");
+        hm.put("60", "Sixty");
+        hm.put("70", "Seventy");
+        hm.put("80", "Eighty");
+        hm.put("90", "Ninety");
+        String str = String.valueOf(num);
+        if (str.length() == 1) {
+            return hm.get(str);
+        }
+        double len = (double) str.length() / 3;
+        len = Math.ceil(len);
+        String[] arr = new String[(int) len];
+        int index = arr.length - 1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = str.length() - 1; i >= 0; i--) {
+            if (sb.length() == 3) {
+                arr[index] = sb.reverse().toString();
+                index--;
+                sb.delete(0, sb.length());
+            }
+            sb.append(str.charAt(i));
+        }
+        arr[index] = sb.reverse().toString();
+        String res = "";
+        String ans = "";
+        HashMap<Integer, String> place = new HashMap<>();
+        int n = arr.length;
+        place.put(3, "Billion");
+        place.put(2, "Million");
+        place.put(1, "Thousand");
+        place.put(0, "");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length() == 1) {
+                if (!arr[i].equals("0")) {
+                    res += hm.get(arr[i]);
+                    res += " ";
+                }
+            } else if (arr[i].length() == 2) {
+                if (hm.containsKey(arr[i])) {
+                    if (!arr[i].equals("00")) {
+                        res += hm.get(arr[i]);
+                        res += " ";
+                    }
+                } else {
+                    String s = arr[i].charAt(0) + "0";
+                    String x = hm.get(s) + " " + hm.get(String.valueOf(arr[i].charAt(1)));
+                    res += x;
+                    res += " ";
+                }
+            } else {
+                for (int j = 0; j < 2; j++) {
+                    if (j == 0) {
+                        if (arr[i].charAt(0) != '0') {
+                            res += hm.get(String.valueOf(arr[i].charAt(j)));
+                            res += " ";
+                            res += "Hundred";
+                            res += " ";
+                        }
+                    } else {
+                        String x = arr[i].substring(1, 3);
+                        if (!x.equals("00")) {
+                            if (hm.containsKey(x)) {
+                                res += hm.get(x);
+                                res += " ";
+                            } else {
+                                String s = x.charAt(0) + "0";
+                                String y = hm.get(s) + " " + hm.get(String.valueOf(x.charAt(1)));
+                                res += y;
+                                res += " ";
+                            }
+                        }
+                    }
+                }
+            }
+            if (res.length() > 0) {
+                res += place.get((n - 1) - i);
+                res += " ";
+                ans += res;
+            }
+            res = "";
+        }
+        return ans.trim();
+    }
+}
