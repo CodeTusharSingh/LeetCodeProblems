@@ -1,0 +1,17 @@
+class Solution {
+    public int getLucky(String s, int k) {
+        String sum = "";
+        for (int i = 0; i < s.length(); i++) {
+            sum += String.valueOf((s.charAt(i) - 'a') + 1);
+        }
+        int res = 0;
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < sum.length(); j++) {
+                res += Integer.parseInt(String.valueOf(sum.charAt(j)));
+            }
+            sum = String.valueOf(res);
+            res = 0;
+        }
+        return Integer.parseInt(sum);
+    }
+}
