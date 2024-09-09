@@ -1,0 +1,95 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        int[][] res = new int[m][n];
+        for(int i = 0; i < m; i++){
+            Arrays.fill(res[i], -1);
+        }
+        int right = n;
+        int down = m;
+        int left = 0;
+        int up = 0;
+        int i = 0;
+        int j = 0;
+        while(head != null){
+            while(j < right){
+                if(head != null){
+                    res[i][j] = head.val;
+                    head = head.next;
+                    j++;
+                } else {
+                    break;
+                }
+            }
+            if(head == null){
+                break;
+            }
+            if(j == right){
+                j--;
+                right--;
+                i++;
+            }
+            while(i < down){
+                if(head != null){
+                    res[i][j] = head.val;
+                    head = head.next;
+                    i++;
+                } else {
+                    break;
+                }
+            }
+            if(head == null){
+                break;
+            }
+            if(i == down){
+                i--;
+                down--;
+                j--;
+            }
+            while(j >= left){
+                if(head != null){
+                    res[i][j] = head.val;
+                    head = head.next;
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            if(head == null){
+                break;
+            }
+            if(j < left){
+                j++;
+                left++;
+                i--;
+            }
+            while(i > up){
+                if(head != null){
+                    res[i][j] = head.val;
+                    head = head.next;
+                    i--;
+                } else {
+                    break;
+                }
+            }
+            if(head == null){
+                break;
+            }
+            if(i == up){
+                i++;
+                up++;
+                j++;
+            }
+        }
+        return res;
+    }
+}
